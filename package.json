@@ -1,7 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "./packages/*"
+    "packages/*"
   ],
   "name": "03-lgelement",
   "version": "1.0.0",
@@ -23,6 +23,9 @@
     "babel-preset-vue": "^2.0.2",
     "jest": "^26.2.2",
     "lerna": "^3.22.1",
+    "rollup": "^2.23.1",
+    "rollup-plugin-terser": "^6.1.0",
+    "rollup-plugin-vue": "5.1.9",
     "vue-jest": "^3.0.6",
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11"

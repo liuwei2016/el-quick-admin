@@ -45,3 +45,52 @@ module.exports = {
 ```bash
 yarn add babel-core@bridge -D -W
 ```
+
+## 安装 Rollup 以及所需的插件
+
+```bash
+yarn add rollup rollup-plugin-terser rollup-plugin-vue@5.1.9 vue-template-compiler -D -W
+```
+
+## Rollup 配置文件
+
+在 button 目录中创建 rollup.config.js
+
+```js
+import { terser } from 'rollup-plugin-terser'
+import vue from 'rollup-plugin-vue'
+
+module.exports = [
+  {
+    input: 'index.js',
+    output: [
+      {
+        file: 'dist/index.js',
+        format: 'es'
+      }
+    ],
+    plugins: [
+      vue({
+        // Dynamically inject css as a <style> tag
+        css: true, 
+        // Explicitly convert template to render function
+        compileTemplate: true
+      }),
+      terser()
+    ]
+  }
+]
+```
+
+## 配置 build 脚本并运行
+
+找到 button 包中的 package.json 的 scripts 配置
+```js
+"build": "rollup -c"
+```
+
+运行打包
+
+```bash
+yarn workspace lg-button run build
+```
