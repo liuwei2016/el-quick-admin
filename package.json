@@ -26,6 +26,7 @@
     "cross-env": "^7.0.2",
     "jest": "^26.2.2",
     "lerna": "^3.22.1",
+    "plop": "^2.7.4",
     "rimraf": "^3.0.2",
     "rollup": "^2.23.1",
     "rollup-plugin-postcss": "^3.1.4",
@@ -42,7 +43,8 @@
     "lerna": "lerna publish",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
-    "clean": "lerna clean"
+    "clean": "lerna clean",
+    "plop": "plop"
   },
   "keywords": [],
   "author": "",
