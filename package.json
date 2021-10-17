@@ -8,6 +8,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "element-ui": "^2.15.6",
     "vue": "^2.6.11"
   },
   "devDependencies": {
