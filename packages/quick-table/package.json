@@ -1,6 +1,6 @@
 {
   "name": "el-quick-table",
-  "version": "0.2.18",
+  "version": "0.2.19",
   "description": "el-quick-table component",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -9,8 +9,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [  "vue-admin table",
+  "keywords": [
+    "vue-admin table",
     "vue table",
-    "element-ui table", "element-ui"],
+    "element-ui table",
+    "element-ui"
+  ],
   "gitHead": "06162083bbe73d992d6f9861b0a9ef9555b83d4d"
 }
