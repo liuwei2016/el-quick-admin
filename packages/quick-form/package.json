@@ -1,7 +1,7 @@
 {
-  "name": "el-{{name}}",
+  "name": "el-quick-form",
   "version": "0.0.0",
-  "description": "el-{{name}} component",
+  "description": "el-quick-form component",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "author": "liuwei2016 <1101296840@qq.com>",
@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "axios": "0.22.0"
   },
   "keywords": []
 }

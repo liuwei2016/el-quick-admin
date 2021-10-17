@@ -54,7 +54,7 @@ import merge from "./merge";
 import resize from "./resize";
 
 export default {
-  name: "quick-table",
+  name: "ElQuickTable",
   inheritAttrs: false,
   mixins: [basis, columns, virtualScroll, merge, resize],
   props: {
