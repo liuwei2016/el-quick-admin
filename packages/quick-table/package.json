@@ -1,6 +1,6 @@
 {
   "name": "el-quick-table",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "el-quick-table component",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
