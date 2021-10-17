@@ -9,7 +9,7 @@ export const QuickTable = _ => ({
   components: { LgQuickTable },
   template: `
     <div>
-      <lg-quick-table></lg-quick-table>
+      <ELquick-table></ELquick-table>
     </div>
   `
 })
