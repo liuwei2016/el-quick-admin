@@ -6,7 +6,7 @@
     :style="{ height: styles.containerHeight }"
   >
     <div class="quickOper">
-      快捷操作
+      快捷操作2
     </div>
     <!-- el-table -->
     <el-table
