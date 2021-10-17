@@ -1,6 +1,6 @@
 {
   "name": "el-quick-form",
-  "version": "0.0.0",
+  "version": "0.2.18",
   "description": "el-quick-form component",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
