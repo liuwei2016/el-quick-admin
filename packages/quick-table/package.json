@@ -9,6 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [  "vue-admin table",
+    "vue table",
+    "element-ui table", "element-ui"],
   "gitHead": "06162083bbe73d992d6f9861b0a9ef9555b83d4d"
 }

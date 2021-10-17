@@ -9,7 +9,7 @@ const pageProps = function() {
     pageSizes: [10, 20, 50, 100],
     currentPage: 1,
     layout: "total, sizes, prev, pager, next, jumper",
-    class: "agel-pagination",
+    class: "quick-pagination",
     total: 0
   };
 };

@@ -12,5 +12,7 @@
   "dependencies": {
     "axios": "0.22.0"
   },
-  "keywords": []
+  "keywords": [  "element admin form",
+    "vue form",
+    "element-ui form", "element-ui"],
 }

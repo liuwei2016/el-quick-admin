@@ -109,7 +109,7 @@ export default {
   transition: none;
 }
 
-.agel-pagination {
+.quick-pagination {
   display: flex;
   align-items: center;
   padding: 0px 0px;
