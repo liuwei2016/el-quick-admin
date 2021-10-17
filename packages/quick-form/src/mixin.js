@@ -1,16 +1,15 @@
 /**
  * Created by liuwei2016 on 2021/10/04.
- 
- 
+
  * 功能说明：
  * 公共表单组件
  */
 const superType = data => {
-  const type = Object.prototype.toString.call(data).toLowerCase();
+  const type = Object.prototype.toString.call(data).toLowerCase()
   return type.replace(/^\[object\s(\w+)\]$/, (...rest) => {
-    return rest[1];
-  });
-};
+    return rest[1]
+  })
+}
 
 export default {
   props: {
@@ -41,49 +40,49 @@ export default {
     // 左右模式或者上下模式。top 为上下，left/right 为左右（指左右时，label 是左对齐或右对齐）
     labelPosition: {
       type: String,
-      default: "top"
+      default: 'top'
     },
     // 左右模式时，label 的宽度
     labelWidth: {
       type: String,
-      default: "160px"
+      default: '160px'
     }
   },
   methods: {
     // 获取区块的样式
-    getBlockClass(blockItem) {
-      const c = blockItem.class;
+    getBlockClass (blockItem) {
+      const c = blockItem.class
       return Object.assign({}, c, {
-        "block-item": this.borderForm
-      });
+        'block-item': this.borderForm
+      })
     },
 
     // 获取 label
-    getFormItemLabel(formItem) {
+    getFormItemLabel (formItem) {
       if (
         this.textModel &&
-        (this.labelPosition === "left" || this.labelPosition === "right")
+        (this.labelPosition === 'left' || this.labelPosition === 'right')
       ) {
-        return formItem.label + "：";
+        return formItem.label + '：'
       }
-      return formItem.label;
+      return formItem.label
     },
 
     // 获取单个要素的列宽
-    getColSize(item) {
-      if (item.type === "child-form") {
-        return 24;
+    getColSize (item) {
+      if (item.type === 'child-form') {
+        return 24
       }
 
       // 要素为其他类型时，优先全局 size，再次是要素本身 size，再次是默认值 12，半行
-      return item.span || this.formItemCol || item.size || 12;
+      return item.span || this.formItemCol || item.size || 12
     },
-    deepCopy(origin) {
-      const valueTypes = ["object", "array"]; // 后面可以支持下 map、set 等
+    deepCopy (origin) {
+      const valueTypes = ['object', 'array'] // 后面可以支持下 map、set 等
       if (!valueTypes.includes(superType(origin))) {
-        return "必须传入对象"; // 若不是对象则结束
+        return '必须传入对象' // 若不是对象则结束
       }
-      const target = Array.isArray(origin) ? [] : {}; // 判别是数组还是对象
+      const target = Array.isArray(origin) ? [] : {} // 判别是数组还是对象
       for (const k in origin) {
         // 循环拷贝
         // origin.hasOwnProperty(k)
@@ -93,13 +92,13 @@ export default {
           // 判断属性是否在对象自身上（非原型链上的父级属性）
           if (valueTypes.includes(superType(origin[k]))) {
             // 复杂类型，递归
-            target[k] = this.deepCopy(origin[k]);
+            target[k] = this.deepCopy(origin[k])
           } else {
-            target[k] = origin[k];
+            target[k] = origin[k]
           }
         }
       }
-      return target;
+      return target
     }
   }
-};
+}

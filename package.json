@@ -7,6 +7,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "lerna": "lerna publish",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "build:dev": "cross-env NODE_ENV=development rollup -c",
+    "clean": "lerna clean",
+    "plop": "plop",
+    "lint": "eslint --fix --ext .js,.vue packages"
+  },
   "dependencies": {
     "axios": "^0.23.0",
     "element-ui": "^2.15.6",
@@ -31,6 +42,12 @@
     "babel-loader": "^8.1.0",
     "babel-preset-vue": "^2.0.2",
     "cross-env": "^7.0.2",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-vue": "^7.19.1",
     "jest": "^26.2.2",
     "lerna": "^3.22.1",
     "plop": "^2.7.4",
@@ -42,16 +59,6 @@
     "vue-jest": "^3.0.6",
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11"
-  },
-  "scripts": {
-    "test": "jest",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "lerna": "lerna publish",
-    "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "build:dev": "cross-env NODE_ENV=development rollup -c",
-    "clean": "lerna clean",
-    "plop": "plop"
   },
   "keywords": [],
   "author": "",

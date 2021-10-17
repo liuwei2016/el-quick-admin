@@ -197,26 +197,26 @@
 </template>
 
 <script>
-import FormMixin from "./mixin";
-import FormInput from "./form_item/form_input.vue";
-import FormDictSelect from "./form_item/form_dict_select.vue";
-import FormDate from "./form_item/form_date.vue";
-import FormHourMinute from "./form_item/form_hour_minute.vue";
-import FormDateRange from "./form_item/form_date_range.vue";
-import FormNumberInput from "./form_item/form_number_input.vue";
-import FormAutoComplete from "./form_item/form_auto_complete.vue";
-import FormRadio from "./form_item/form_radio.vue";
-import FormTextarea from "./form_item/form_textarea.vue";
-import FormNormalSelect from "./form_item/form_normal_select.vue";
-import FormMutipleSelect from "./form_item/form_mutiple_select.vue";
-import FormMoneyInput from "./form_item/form_money_input.vue";
-import FormRateInput from "./form_item/form_rate_input.vue";
-import FormMulLinkage from "./form_item/form_mul_linkage.vue";
-import FormNormalNumberInput from "./form_item/form_normal_number_input.vue";
-const axios = require("axios");
+import FormMixin from './mixin'
+import FormInput from './form_item/form_input.vue'
+import FormDictSelect from './form_item/form_dict_select.vue'
+import FormDate from './form_item/form_date.vue'
+import FormHourMinute from './form_item/form_hour_minute.vue'
+import FormDateRange from './form_item/form_date_range.vue'
+import FormNumberInput from './form_item/form_number_input.vue'
+import FormAutoComplete from './form_item/form_auto_complete.vue'
+import FormRadio from './form_item/form_radio.vue'
+import FormTextarea from './form_item/form_textarea.vue'
+import FormNormalSelect from './form_item/form_normal_select.vue'
+import FormMutipleSelect from './form_item/form_mutiple_select.vue'
+import FormMoneyInput from './form_item/form_money_input.vue'
+import FormRateInput from './form_item/form_rate_input.vue'
+import FormMulLinkage from './form_item/form_mul_linkage.vue'
+import FormNormalNumberInput from './form_item/form_normal_number_input.vue'
+const axios = require('axios')
 
 export default {
-  name: "ChildForm",
+  name: 'ChildForm',
   mixins: [FormMixin],
   props: {
     item: {
@@ -230,26 +230,26 @@ export default {
   },
   computed: {
     val: {
-      get() {
-        return this.value;
+      get () {
+        return this.value
       },
-      set(v) {
-        this.$emit("input", v);
+      set (v) {
+        this.$emit('input', v)
       }
     }
   },
   inject: [
-    "changeData",
-    "statusChangeFn",
-    "dynamicDict",
-    "dynamicSelectOption"
+    'changeData',
+    'statusChangeFn',
+    'dynamicDict',
+    'dynamicSelectOption'
   ],
   watch: {
     // 这个是只有当 子表单 的值变化时才会触发的
     // 以下两个示例都会触发。注意，其他情况下不会触发
     // QuickForm.$set(QuickForm.formData, 'key',[{projectName:'12'}]);
     // QuickForm.$set(QuickForm.formData.testInput, '0',{projectName:'12'});
-    value(oldVal, newVal) {
+    value (oldVal, newVal) {
       // console.log('oldVal, newVal', oldVal === newVal);
       // 这里的逻辑存在比较难处理的情况：
       // 1. 预期：当初始化，value 为空数组或者不存在的时候，这里可以自动生成一个新行
@@ -257,30 +257,30 @@ export default {
       // 3. 预期：正常模式下新增、删除行，fields 会随着 value 更新（不应当重置）
       if (!this.value || this.value.length === 0) {
         // this.childFormData = [];
-        this.childFormFileds = [];
-        this.addChildForm();
+        this.childFormFileds = []
+        this.addChildForm()
       } else {
         if (oldVal !== newVal) {
           // 值变化了，应当重置
-          this.resetChildFormFileds();
+          this.resetChildFormFileds()
         }
         // 不变化的情况下，不应该进行处理（push 和 splice 会是这种情况）
         // 该种情况下，childFormFileds 由各自的行为进行处理
       }
     }
   },
-  mounted() {
+  mounted () {
     if (this.value && this.value instanceof Array && this.value.length > 0) {
       this.value.forEach(childFormData => {
-        this.addChildForm(childFormData);
-      });
+        this.addChildForm(childFormData)
+      })
     } else {
-      this.addChildForm();
+      this.addChildForm()
     }
     // 动态加载需要数据字典的选项
-    this.loadDynamicSelectOptions();
+    this.loadDynamicSelectOptions()
   },
-  data() {
+  data () {
     return {
       // 子表单的 fileds
       childFormFileds: [],
@@ -301,94 +301,94 @@ export default {
         // 设置为必填
         setElementRequired: this.setElementRequired
       }
-    };
+    }
   },
-  provide() {
+  provide () {
     return {
       // 子组件收到这个变量后，将知道这个元素是子表单，
       // 因此在部分逻辑上执行时，和默认表单逻辑不通
-      formItemType: "childForm",
+      formItemType: 'childForm',
       childChangeData: this.childChangeData
-    };
+    }
   },
   methods: {
     // 监听值更新
-    valueUpdateEvent() {
+    valueUpdateEvent () {
       // const data = this.getData();
       // console.log('data', data);
       // this.$emit('input', data);
     },
 
     // todo 这里的数据字典请求接口，应该最后合并到一起，由一个专门的数据字典请求管理器去请求，减低接口重复请求的情况
-    loadDynamicSelectOptions() {
-      const parentCodeList = [];
+    loadDynamicSelectOptions () {
+      const parentCodeList = []
       // console.log('loadDynamicSelectOptions');
       // console.log(JSON.stringify(Object.keys(this.dynamicDict)));
       // 遍历传入的数据
       this.childFormFileds.forEach(fields => {
         if (fields && fields instanceof Array) {
           fields.forEach(field => {
-            if (field.type === "dynamic-select" && field.parentKey) {
+            if (field.type === 'dynamic-select' && field.parentKey) {
               // 再做一次去重判断。如果该字典已经在里面了，再跳过这一个
               if (parentCodeList.indexOf(field.parentKey) === -1) {
                 if (!this.dynamicDict[field.parentKey]) {
-                  parentCodeList.push(field.parentKey);
+                  parentCodeList.push(field.parentKey)
                   // 初始化一个数组
-                  this.$set(this.dynamicDict, field.parentKey, []);
+                  this.$set(this.dynamicDict, field.parentKey, [])
                 }
               }
             }
             // 地区选择框，三级联动
-            if (field.type === "area-select") {
-              const firstParentKey = field.firstParentKey || "10020";
-              const secondParentKey = field.firstParentKey || "10021";
-              const thirdParentKey = field.firstParentKey || "10022";
+            if (field.type === 'area-select') {
+              const firstParentKey = field.firstParentKey || '10020'
+              const secondParentKey = field.firstParentKey || '10021'
+              const thirdParentKey = field.firstParentKey || '10022'
               if (parentCodeList.indexOf(firstParentKey) === -1) {
                 if (!this.dynamicDict[firstParentKey]) {
-                  parentCodeList.push(firstParentKey);
-                  this.$set(this.dynamicDict, firstParentKey, []);
+                  parentCodeList.push(firstParentKey)
+                  this.$set(this.dynamicDict, firstParentKey, [])
                 }
               }
               if (parentCodeList.indexOf(secondParentKey) === -1) {
                 if (!this.dynamicDict[secondParentKey]) {
-                  parentCodeList.push(secondParentKey);
-                  this.$set(this.dynamicDict, secondParentKey, []);
+                  parentCodeList.push(secondParentKey)
+                  this.$set(this.dynamicDict, secondParentKey, [])
                 }
               }
               if (parentCodeList.indexOf(thirdParentKey) === -1) {
                 if (!this.dynamicDict[thirdParentKey]) {
-                  parentCodeList.push(thirdParentKey);
-                  this.$set(this.dynamicDict, thirdParentKey, []);
+                  parentCodeList.push(thirdParentKey)
+                  this.$set(this.dynamicDict, thirdParentKey, [])
                 }
               }
             }
-          });
+          })
         }
-      });
+      })
       if (parentCodeList.length === 0) {
-        return;
+        return
       }
 
       // 通过父 key 拿到所有元素
-      let payload = null;
+      let payload = null
       if (this.dynamicSelectOption.queryKey) {
         payload = {
           [this.dynamicSelectOption.queryKey]: parentCodeList
-        };
+        }
       } else {
-        payload = parentCodeList;
+        payload = parentCodeList
       }
       // console.log('QuickForm 拉取动态字典');
       axios
         .post(this.dynamicSelectOption.dictUrl, payload)
         .then(res => {
           // 兼容性处理
-          let data;
+          let data
           // 这里判断是不是 axios 的默认返回数据（未经过请求拦截器处理的）
           if (res.request && res.headers) {
-            data = res.data;
+            data = res.data
           } else {
-            data = res;
+            data = res
           }
           if (data.code === 200) {
             if (data.data.length > 0) {
@@ -397,100 +397,100 @@ export default {
               // 如果不是空的，则将其置为空数组
               parentCodeList.forEach(pCode => {
                 if (this.dynamicDict[pCode].length > 0) {
-                  this.$set(this.dynamicDict, pCode, []);
+                  this.$set(this.dynamicDict, pCode, [])
                 }
-              });
+              })
 
               // 加载到结果
               data.data.forEach(item => {
                 // 用每个返回值的 pCode 作为 key，将该项添加到数组里。
                 // 注：之所以是数组，是因为之前已经初始化过了（parentKey 为 Code）
-                const pCode = item[this.dynamicSelectOption.parentKey];
-                this.dynamicDict[pCode].push(item);
-              });
+                const pCode = item[this.dynamicSelectOption.parentKey]
+                this.dynamicDict[pCode].push(item)
+              })
             }
           } else {
-            this.$message.error(data.msg);
+            this.$message.error(data.msg)
           }
         })
         .catch(() => {
-          this.$message.error("数据字典加载错误，请刷新页面重试");
-        });
+          this.$message.error('数据字典加载错误，请刷新页面重试')
+        })
     },
 
     // 添加一个子表单到 childFormFileds 最后
-    addChildForm(childFormData) {
+    addChildForm (childFormData) {
       // 禁用时禁止操作
-      const { childrenForm } = this.item;
+      const { childrenForm } = this.item
       // 插入 childFormFileds
-      const filed = this.deepCopy(childrenForm);
+      const filed = this.deepCopy(childrenForm)
       // 给每个 field 添加一个随机 id
-      const randomId = (Math.random() * 100000000).toFixed(0);
-      filed.randomId = randomId;
-      this.childFormFileds.push(filed);
+      const randomId = (Math.random() * 100000000).toFixed(0)
+      filed.randomId = randomId
+      this.childFormFileds.push(filed)
 
       // 默认禁用
-      const defaultDisableList = [];
+      const defaultDisableList = []
       // 默认隐藏
-      const defaultHiddenList = [];
+      const defaultHiddenList = []
       // 给 value 插入一条
-      const obj = {};
+      const obj = {}
       childrenForm.forEach(child => {
         if (childFormData && child.key in childFormData) {
-          obj[child.key] = childFormData[child.key];
+          obj[child.key] = childFormData[child.key]
         } else {
-          obj[child.key] = child.defaultValue || "";
+          obj[child.key] = child.defaultValue || ''
         }
         if (child.disableDefault) {
-          defaultDisableList.push(child.key);
+          defaultDisableList.push(child.key)
         }
         if (child.hiddenDefault) {
-          defaultHiddenList.push(child.key);
+          defaultHiddenList.push(child.key)
         }
-      });
-      this.val.push(obj);
+      })
+      this.val.push(obj)
 
-      const formKey = this.item.key;
+      const formKey = this.item.key
 
       defaultDisableList.forEach(disableKey => {
-        const keyText = `${formKey}_${randomId}_${disableKey}`;
+        const keyText = `${formKey}_${randomId}_${disableKey}`
         // this.statusChangeFn.setElementHidden(keyText, false);
-        this.statusChangeFn.setElementDisable(keyText);
-      });
+        this.statusChangeFn.setElementDisable(keyText)
+      })
       defaultHiddenList.forEach(disableKey => {
-        const keyText = `${formKey}_${randomId}_${disableKey}`;
-        this.statusChangeFn.setElementHidden(keyText);
-      });
+        const keyText = `${formKey}_${randomId}_${disableKey}`
+        this.statusChangeFn.setElementHidden(keyText)
+      })
     },
 
     // 表单组件是否显示
-    isShow(item, randomId) {
+    isShow (item, randomId) {
       // 如果是子表单里的元素的话，采用三段匹配
-      const formKey = this.item.key;
+      const formKey = this.item.key
       // const randomId = item.randomId;
-      const key = item.key;
-      const keyText = `${formKey}_${randomId}_${key}`;
+      const key = item.key
+      const keyText = `${formKey}_${randomId}_${key}`
       // console.log('isShow', keyText);
       // 如果该要素在隐藏列表里，则不显示
       if (this.changeData.hiddenKeyList.indexOf(keyText) > -1) {
-        return false;
+        return false
       }
-      return true;
+      return true
     },
 
     // 对一个 block 下的要素，进行 el-row 的分行
-    getFieldRow(children, randomId) {
+    getFieldRow (children, randomId) {
       // 一个二维数组，每个数组要素是 el-row 的一行
-      const list = [];
+      const list = []
       if (!children) {
-        return list;
+        return list
       }
       children.forEach(item => {
         // 如果当前要素不显示，则直接跳过
         if (!this.isShow(item, randomId)) {
-          return;
+          return
         }
-        const currentSpan = this.getColSize(item);
+        const currentSpan = this.getColSize(item)
         // 如果初始为空
         if (list.length === 0) {
           const obj = {
@@ -499,14 +499,14 @@ export default {
             rowItem: Object.assign({}, item, {
               randomId
             })
-          };
-          list.push([obj]);
-          return;
+          }
+          list.push([obj])
+          return
         }
         // 如果初始不为空，
         // 1、判断有没有打开 （当前这个的）【默认在新行第一列】开关
         // 又或者是当前是不是子表单（item.type === 'child-form'表示是子表单）
-        if (item.nextRowFirst || item.type === "child-form") {
+        if (item.nextRowFirst || item.type === 'child-form') {
           // 如果是新行第一列，那么直接把这个添加到 list 里面
           const obj = {
             // 获取到他有多少 span，满 24 为一行
@@ -514,13 +514,13 @@ export default {
             rowItem: Object.assign({}, item, {
               randomId
             })
-          };
-          list.push([obj]);
-          return;
+          }
+          list.push([obj])
+          return
         }
         // 2、判断（上一个）【默认是本行最后一列】开关是否打开
         // 先拿到最后一行
-        const listLastItem = list[list.length - 1];
+        const listLastItem = list[list.length - 1]
         // 的最后一个是否打开了这个开关
         if (listLastItem[listLastItem.length - 1].rowItem.currentRowLast) {
           // 如果打开这个开关，那么当前这个直接放到下一行的第一个
@@ -530,9 +530,9 @@ export default {
             rowItem: Object.assign({}, item, {
               randomId
             })
-          };
-          list.push([obj]);
-          return;
+          }
+          list.push([obj])
+          return
         }
 
         // 下拉正常计算 span 来决定是否换行
@@ -540,8 +540,8 @@ export default {
         const lastTotalSpan = list[list.length - 1]
           .map(item => item.span)
           .reduce((lastTotal, currentItem) => {
-            return lastTotal + currentItem;
-          });
+            return lastTotal + currentItem
+          })
 
         // 如果已经大于等于 24 了，说明满了一行，那么直接创建新行
         // 或者是当前这个加之前的大于 24，那么说明这个放在之前那行超过 24，所以也要放到新行去
@@ -552,9 +552,8 @@ export default {
             rowItem: Object.assign({}, item, {
               randomId
             })
-          };
-          list.push([obj]);
-          return;
+          }
+          list.push([obj])
         } else {
           // 此时说明当前这个可以放到之前哪一行
           const obj = {
@@ -563,40 +562,40 @@ export default {
             rowItem: Object.assign({}, item, {
               randomId
             })
-          };
-          list[list.length - 1].push(obj);
+          }
+          list[list.length - 1].push(obj)
         }
-      });
-      return list;
+      })
+      return list
     },
 
     // 更新数据
-    updateFormData(data, randomId) {
-      let index = -1;
+    updateFormData (data, randomId) {
+      let index = -1
       this.childFormFileds.forEach((item, i) => {
         if (item.randomId === randomId) {
-          index = i;
+          index = i
         }
-      });
+      })
 
       Object.keys(data).forEach(key => {
         // 如果 key 在值里面
         if (key in this.value[index]) {
           // 则回填这个值
-          this.$set(this.value[index], key, data[key]);
+          this.$set(this.value[index], key, data[key])
         }
-      });
+      })
     },
 
     // 设置某个要素必填
     // key：操作的 key
     // randomId：该子表单的随机 id
     // beHidden：必填，默认是 true，表示隐藏。而 false，表示取消隐藏
-    setElementRequired(key, randomId, beRequired = true) {
+    setElementRequired (key, randomId, beRequired = true) {
       // 先获取
       const currentField = this.childFormFileds.filter(
         item => item.randomId === randomId
-      )[0];
+      )[0]
 
       // 设置必填
       if (beRequired) {
@@ -606,43 +605,43 @@ export default {
           currentField.forEach(field => {
             // 如果 key 不匹配，则跳过
             if (field.key !== key) {
-              return;
+              return
             }
             // 先判断有没有 rules 这个属性，没有则添加这个属性，并且添加必填项然后返回
             if (!field.rules) {
-              this.$set(field, "rules", [
+              this.$set(field, 'rules', [
                 {
                   required: true,
-                  message: "请输入",
-                  trigger: ["blur", "change"]
+                  message: '请输入',
+                  trigger: ['blur', 'change']
                 }
-              ]);
-              return;
+              ])
+              return
             }
 
             // 遍历 其 rules，
-            const { rules } = field;
+            const { rules } = field
             // 是否有 required 这条规则
-            let haveRequired = false;
+            let haveRequired = false
             // 是否已修改
-            let changed = false;
+            let changed = false
             rules.forEach(rule => {
               // 如果有 required 属性
-              if ("required" in rule) {
-                haveRequired = true;
+              if ('required' in rule) {
+                haveRequired = true
                 // 如果值为 true，则跳过
                 if (rule.required) {
-                  return;
+
                 } else {
                   // 否则修改其为 true
-                  rule.required = true;
-                  changed = true;
+                  rule.required = true
+                  changed = true
                 }
               }
-            });
+            })
             // 如果已修改，那么说明没必要继续操作了，跳过
             if (changed) {
-              return;
+              return
             }
             // 如果没修改，并且没有必填规则
             // （注意，如果有规则，那么必然已修改。所以只存在有规则已修改、未修改有规则、未修改无规则三种情况）
@@ -650,11 +649,11 @@ export default {
               // 添加规则
               rules.push({
                 required: true,
-                message: "请输入",
-                trigger: ["blur", "change"]
-              });
+                message: '请输入',
+                trigger: ['blur', 'change']
+              })
             }
-          });
+          })
         }
       } else {
         // 取消必填
@@ -663,127 +662,127 @@ export default {
           currentField.forEach(field => {
             // 如果 key 不匹配，则跳过
             if (field.key !== key) {
-              return;
+              return
             }
 
             // 先判断有没有 rules 这个属性，没有则添加这个属性，并且添加必填项然后返回
             if (!field.rules) {
-              return;
+              return
             }
             // 如果有，则遍历并删除
-            let i = -1;
+            let i = -1
             field.rules.forEach((rule, index) => {
-              if ("required" in rule) {
-                i = index;
+              if ('required' in rule) {
+                i = index
               }
-            });
+            })
             if (i !== -1) {
-              field.rules.splice(i, 1);
+              field.rules.splice(i, 1)
             }
-          });
+          })
         }
       }
     },
 
     // 执行校验
-    validateForm() {
+    validateForm () {
       return new Promise((resolve, reject) => {
         Promise.all(this.$refs.form.map(form => this.validateItem(form)))
           .then(resolve)
-          .catch(reject);
-      });
+          .catch(reject)
+      })
     },
 
     // 校验单个表单
-    validateItem(form) {
+    validateItem (form) {
       return new Promise((resolve, reject) => {
         form.validate(isPass => {
           if (isPass) {
-            resolve();
+            resolve()
           } else {
-            reject();
+            reject()
           }
-        });
-      });
+        })
+      })
     },
 
     // 收起/展开表单
-    flodChildField(randomId) {
-      const i = this.foldList.indexOf(randomId);
+    flodChildField (randomId) {
+      const i = this.foldList.indexOf(randomId)
       if (i > -1) {
-        this.foldList.splice(i, 1);
+        this.foldList.splice(i, 1)
       } else {
-        this.foldList.push(randomId);
+        this.foldList.push(randomId)
       }
     },
 
     // 某个子表单删除时调用
-    deleteChildForm(randomId) {
+    deleteChildForm (randomId) {
       // 禁用时禁止操作
       if (this.allDisabled) {
-        return;
+        return
       }
-      let i = -1;
+      let i = -1
       this.childFormFileds.forEach((field, index) => {
         if (field.randomId === randomId) {
-          i = index;
+          i = index
           // 还要记得删除父组件里，disableList，hiddenKeyList
           field.forEach(fieldFormItem => {
-            const formKey = this.item.key;
-            const key = fieldFormItem.key;
-            const keyText = `${formKey}_${randomId}_${key}`;
-            this.statusChangeFn.setElementHidden(keyText, false);
-            this.statusChangeFn.setElementDisable(keyText, false);
-          });
+            const formKey = this.item.key
+            const key = fieldFormItem.key
+            const keyText = `${formKey}_${randomId}_${key}`
+            this.statusChangeFn.setElementHidden(keyText, false)
+            this.statusChangeFn.setElementDisable(keyText, false)
+          })
         }
-      });
+      })
 
-      this.childFormFileds.splice(i, 1);
-      this.val.splice(i, 1);
-      this.valueUpdateEvent();
+      this.childFormFileds.splice(i, 1)
+      this.val.splice(i, 1)
+      this.valueUpdateEvent()
 
       if (this.val.length === 0) {
-        this.addChildForm();
+        this.addChildForm()
       }
     },
 
     // 重置子表单结构
     // 注意：这会导致 禁用、隐藏的 元素消失
-    resetChildFormFileds() {
-      const { childrenForm } = this.item;
+    resetChildFormFileds () {
+      const { childrenForm } = this.item
 
-      this.childFormFileds = [];
+      this.childFormFileds = []
       // 这里的目的是为了生成 fields
       this.value.forEach(() => {
-        const filed = this.deepCopy(childrenForm);
+        const filed = this.deepCopy(childrenForm)
         // 给每个 field 添加一个随机 id
-        const randomId = (Math.random() * 100000000).toFixed(0);
-        filed.randomId = randomId;
-        this.childFormFileds.push(filed);
-      });
+        const randomId = (Math.random() * 100000000).toFixed(0)
+        filed.randomId = randomId
+        this.childFormFileds.push(filed)
+      })
     },
 
     // 重置内容（子表单数量不变）
-    resetFields() {
-      const { childrenForm } = this.item;
-      const obj = {};
+    resetFields () {
+      const { childrenForm } = this.item
+      const obj = {}
 
       childrenForm.forEach(child => {
-        obj[child.key] = child.defaultValue || "";
-      });
+        obj[child.key] = child.defaultValue || ''
+      })
       this.value.forEach(item => {
         Object.keys(item).forEach(k => {
-          this.$set(item, k, obj[k]);
-          item[k] = obj[k];
-        });
-      });
+          this.$set(item, k, obj[k])
+          item[k] = obj[k]
+        })
+      })
     },
 
-    getProps(rowItem) {
+    getProps (rowItem) {
       return {
         item: rowItem,
         allDisabled: this.allDisabled
-      };
+      }
     }
   },
   components: {
@@ -803,7 +802,7 @@ export default {
     FormMulLinkage,
     FormNormalNumberInput
   }
-};
+}
 </script>
 
 <style scoped lang="less">

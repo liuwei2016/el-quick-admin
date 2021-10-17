@@ -23,37 +23,37 @@
 
 <script>
 export default {
-  name: "TableReadonly",
+  name: 'TableReadonly',
   props: {
     item: {
       type: Object,
       default: () => {
-        return {};
+        return {}
       }
     },
     value: {
       type: Array,
       default: () => {
-        return [];
+        return []
       }
     }
   },
-  data() {
-    return {};
+  data () {
+    return {}
   },
   methods: {
     // 表头样式
-    headerStyle() {
-      const obj = {};
-      obj.background = "#F7F8FB";
-      obj.fontFamily = "PingFangSC-Semibold";
-      obj.fontSize = "14px";
-      obj.color = "#12182A";
-      obj.fontWeight = "600";
-      return obj;
+    headerStyle () {
+      const obj = {}
+      obj.background = '#F7F8FB'
+      obj.fontFamily = 'PingFangSC-Semibold'
+      obj.fontSize = '14px'
+      obj.color = '#12182A'
+      obj.fontWeight = '600'
+      return obj
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">

@@ -47,14 +47,14 @@
 </template>
 
 <script>
-import basis from "./basic";
-import columns from "./columns";
-import virtualScroll from "./virtual-scroll";
-import merge from "./merge";
-import resize from "./resize";
+import basis from './basic'
+import columns from './columns'
+import virtualScroll from './virtual-scroll'
+import merge from './merge'
+import resize from './resize'
 
 export default {
-  name: "ElQuickTable",
+  name: 'ElQuickTable',
   inheritAttrs: false,
   mixins: [basis, columns, virtualScroll, merge, resize],
   props: {
@@ -72,10 +72,10 @@ export default {
     attach: {
       deep: true,
       immediate: true,
-      handler: function() {
-        for (let key in this.attach) {
+      handler: function () {
+        for (const key in this.attach) {
           if (this.attach[key] !== undefined) {
-            this.$set(this.value, key, this.attach[key]);
+            this.$set(this.value, key, this.attach[key])
           }
         }
       }
@@ -85,7 +85,7 @@ export default {
   //   vue.prototype.$quickTableConfig = opts;
   //   vue.component(opts.name || this.name, this);
   // },
-};
+}
 </script>
 
 <style>

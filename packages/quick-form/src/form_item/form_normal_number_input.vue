@@ -30,32 +30,32 @@
 
 <script>
 // 普通数字输入框
-import FormMixin from "./mixin";
+import FormMixin from './mixin'
 
 export default {
-  name: "FormNormalNumber",
+  name: 'FormNormalNumber',
   mixins: [FormMixin],
   computed: {
     // 前置符号
-    prepend() {
+    prepend () {
       // 兼容性处理
       if (this.item.prepend) {
-        return this.item.prepend;
+        return this.item.prepend
       } else {
-        return "";
+        return ''
       }
     },
     // 后置符号
-    append() {
+    append () {
       // 兼容性处理
       if (this.item.append) {
-        return this.item.append;
+        return this.item.append
       } else {
-        return "";
+        return ''
       }
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">

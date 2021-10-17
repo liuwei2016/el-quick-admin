@@ -26,39 +26,39 @@
 </template>
 
 <script>
-import FormMixin from "./mixin";
+import FormMixin from './mixin'
 
 export default {
-  name: "FormInput",
+  name: 'FormInput',
   mixins: [FormMixin],
-  data() {
-    return {};
+  data () {
+    return {}
   },
   computed: {
     // 前置符号
-    prepend() {
+    prepend () {
       // 兼容性处理
       if (this.item.prepend) {
-        return this.item.prepend;
+        return this.item.prepend
       } else if (this.item.prependMsg) {
-        return this.item.prependMsg;
+        return this.item.prependMsg
       } else {
-        return "";
+        return ''
       }
     },
     // 后置符号
-    append() {
+    append () {
       // 兼容性处理
       if (this.item.append) {
-        return this.item.append;
+        return this.item.append
       } else if (this.item.appendMsg) {
-        return this.item.appendMsg;
+        return this.item.appendMsg
       } else {
-        return "";
+        return ''
       }
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">

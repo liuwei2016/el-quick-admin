@@ -25,46 +25,46 @@
 </template>
 
 <script>
-import FormMixin from "./mixin";
-import FormSelectMixin from "./select-mixin";
+import FormMixin from './mixin'
+import FormSelectMixin from './select-mixin'
 
 export default {
-  name: "FormMutipleSelect",
+  name: 'FormMutipleSelect',
   mixins: [FormMixin, FormSelectMixin],
   computed: {
-    textModelValue() {
+    textModelValue () {
       if (this.item.options) {
-        let val = "";
+        let val = ''
         this.item.options.forEach(item => {
           if (item.value === this.value) {
-            val = item.label;
+            val = item.label
           }
-        });
-        return val;
+        })
+        return val
       } else {
-        return "";
+        return ''
       }
     },
     val: {
-      get() {
-        return this.value;
+      get () {
+        return this.value
       },
-      set(v) {
-        this.$emit("input", v);
-        this._valueLink(v);
+      set (v) {
+        this.$emit('input', v)
+        this._valueLink(v)
         // 只有非子表单的情况下，才会冒泡上去数据变更
-        if (this.formItemType !== "childForm") {
+        if (this.formItemType !== 'childForm') {
           this.statusChangeFn.valueUpdateEvent({
             [this.item.key]: v
-          });
+          })
         } else {
           // 如果是子表单的话，执行内置的变更
-          this.childChangeData.valueUpdateEvent();
+          this.childChangeData.valueUpdateEvent()
         }
       }
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">

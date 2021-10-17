@@ -256,35 +256,35 @@
 </template>
 
 <script>
-const axios = require("axios");
-import FormInput from "./form_item/form_input.vue";
-import FormTextarea from "./form_item/form_textarea.vue";
-import FormDictSelect from "./form_item/form_dict_select.vue";
-import FormNormalSelect from "./form_item/form_normal_select.vue";
-import FormTreeSelect from "./form_item/form_tree_select.vue";
+import FormInput from './form_item/form_input.vue'
+import FormTextarea from './form_item/form_textarea.vue'
+import FormDictSelect from './form_item/form_dict_select.vue'
+import FormNormalSelect from './form_item/form_normal_select.vue'
+import FormTreeSelect from './form_item/form_tree_select.vue'
 
-import FormMutipleSelect from "./form_item/form_mutiple_select.vue";
-import FormDate from "./form_item/form_date.vue";
-import FormDateTime from "./form_item/form_datetime.vue";
-import FormHourMinute from "./form_item/form_hour_minute.vue";
-import FormDateRange from "./form_item/form_date_range.vue";
-import FormDateTimeRange from "./form_item/form_datetime_range.vue";
-import FormAutoComplete from "./form_item/form_auto_complete.vue";
-import FormNumberInput from "./form_item/form_number_input.vue";
-import FormRadio from "./form_item/form_radio.vue";
-import FormCheckbox from "./form_item/form_checkbox.vue";
-import FormMoneyInput from "./form_item/form_money_input.vue";
-import FormRateInput from "./form_item/form_rate_input.vue";
-import FormAreaSelect from "./form_item/form_area_select.vue";
-import FormMulLinkage from "./form_item/form_mul_linkage.vue";
-import FormNormalNumberInput from "./form_item/form_normal_number_input.vue";
-import TableReadonly from "./form_item/table_readonly.vue";
+import FormMutipleSelect from './form_item/form_mutiple_select.vue'
+import FormDate from './form_item/form_date.vue'
+import FormDateTime from './form_item/form_datetime.vue'
+import FormHourMinute from './form_item/form_hour_minute.vue'
+import FormDateRange from './form_item/form_date_range.vue'
+import FormDateTimeRange from './form_item/form_datetime_range.vue'
+import FormAutoComplete from './form_item/form_auto_complete.vue'
+import FormNumberInput from './form_item/form_number_input.vue'
+import FormRadio from './form_item/form_radio.vue'
+import FormCheckbox from './form_item/form_checkbox.vue'
+import FormMoneyInput from './form_item/form_money_input.vue'
+import FormRateInput from './form_item/form_rate_input.vue'
+import FormAreaSelect from './form_item/form_area_select.vue'
+import FormMulLinkage from './form_item/form_mul_linkage.vue'
+import FormNormalNumberInput from './form_item/form_normal_number_input.vue'
+import TableReadonly from './form_item/table_readonly.vue'
 
-import ChildForm from "./child_form.vue";
-import FormMixin from "./mixin";
+import ChildForm from './child_form.vue'
+import FormMixin from './mixin'
+const axios = require('axios')
 
 export default {
-  name: "ElQuickForm",
+  name: 'ElQuickForm',
   mixins: [FormMixin],
   components: {
     FormInput,
@@ -314,24 +314,24 @@ export default {
     mode: {
       // 表单模式 tableQuery 为查询模式 只有一个children区块， bigForm 大表单
       type: String,
-      default: "tableQuery" //"dialogForm , tableQuery, bigForm"
+      default: 'tableQuery' // "dialogForm , tableQuery, bigForm"
     },
     fields: {
       type: Array,
       default: () => {
-        return [];
+        return []
       }
     },
     value: {
       type: Object,
       default: () => {
-        return {};
+        return {}
       }
     },
     data: {
       type: Object,
       default: () => {
-        return {};
+        return {}
       }
     },
     // 是否显示收起、展开按钮
@@ -342,7 +342,7 @@ export default {
     // item 的规则 size mini large
     formItemSize: {
       type: String,
-      default: "mini"
+      default: 'mini'
     },
     // 是否显示 全部收起、展开按钮
     showAllFoldBtn: {
@@ -355,18 +355,18 @@ export default {
       default: false
     },
     defaultShowRows: {
-      //表格查询展示的行数
+      // 表格查询展示的行数
       type: Number,
       default: 3
     },
     showRowsFold: {
-      //表格查询表单展示的行数
+      // 表格查询表单展示的行数
       type: Boolean,
       default: true
     }
     // 数据字典的配置
   },
-  data() {
+  data () {
     return {
       // data: {},
       formData: {},
@@ -388,66 +388,66 @@ export default {
         textModel: this.textModel
       },
 
-      customItemList: [], //自定义的组件规则key
+      customItemList: [], // 自定义的组件规则key
 
       foldBlockList: [], // 收起的区块（放在这个里面，该区块就只显示区块标题，不显示内容）
 
-      scanType: "normal", // normal 默认（大表单），single（表单只显示单个区块，上方显示所有区块的按钮组）
-      singleScanBlock: "", // 单个模式时，显示哪个表单
-      tableQueryshowRows: 3, //表格模式下展示的行数
-      allRowsLenth: 3, //所有的行数
-      version: "1.1.0"
-    };
-  },
-  computed: {
-    tableQueryFoldStatus() {
-      let result = false;
-      if (this.tableQueryshowRows < this.allRowsLenth) {
-        result = true;
-      }
-      return result;
+      scanType: 'normal', // normal 默认（大表单），single（表单只显示单个区块，上方显示所有区块的按钮组）
+      singleScanBlock: '', // 单个模式时，显示哪个表单
+      tableQueryshowRows: 3, // 表格模式下展示的行数
+      allRowsLenth: 3, // 所有的行数
+      version: '1.1.0'
     }
   },
-  created() {
-    this.currentFileds = this.fields;
+  computed: {
+    tableQueryFoldStatus () {
+      let result = false
+      if (this.tableQueryshowRows < this.allRowsLenth) {
+        result = true
+      }
+      return result
+    }
+  },
+  created () {
+    this.currentFileds = this.fields
     // this.data = this.value;
-    this.initFormData();
+    this.initFormData()
     // 加载初始情况下，默认禁用的要素
-    this.getDefaultDisableList();
+    this.getDefaultDisableList()
     // 默认隐藏
-    this.getDefaultHiddenList();
+    this.getDefaultHiddenList()
     // 获取自定义组件要素
-    this.getCustomItemList();
+    this.getCustomItemList()
     // 动态加载需要数据字典的选项
-    this.loadDynamicSelectOptions();
-    this.initStatus(); //初始状态
-    this.initMode(); //初始模式配置
+    this.loadDynamicSelectOptions()
+    this.initStatus() // 初始状态
+    this.initMode() // 初始模式配置
 
     // 理论上，不应该动态添加 fileds。尽量 fields 通过事件，内部控制自己是否显示
-    this.$watch("fields", v => {
+    this.$watch('fields', v => {
       console.log(
-        "理论上，不应该动态添加 fileds。尽量 fields 通过事件，内部控制自己是否显示"
-      );
-      this.currentFileds = [];
+        '理论上，不应该动态添加 fileds。尽量 fields 通过事件，内部控制自己是否显示'
+      )
+      this.currentFileds = []
       this.$nextTick(() => {
-        this.currentFileds = v;
-        this.getDefaultDisableList();
-        this.getDefaultHiddenList();
-        this.getCustomItemList();
-        this.loadDynamicSelectOptions();
-        this.initFormData();
-        this.initStatus();
-        this.initMode();
-      });
-    });
+        this.currentFileds = v
+        this.getDefaultDisableList()
+        this.getDefaultHiddenList()
+        this.getCustomItemList()
+        this.loadDynamicSelectOptions()
+        this.initFormData()
+        this.initStatus()
+        this.initMode()
+      })
+    })
 
-    this.$watch("data", () => {
-      this.initFormData();
-      console.log('this.$watch("data"', this.data);
-      this.initStatus();
-    });
+    this.$watch('data', () => {
+      this.initFormData()
+      console.log('this.$watch("data"', this.data)
+      this.initStatus()
+    })
   },
-  provide() {
+  provide () {
     return {
       dynamicSelectOption: this.dynamicSelectOption,
       dynamicDict: this.dynamicDict,
@@ -465,48 +465,48 @@ export default {
       },
       // 会动态变化的数据（注意，来自 props【更上级组件】的数据，不能放这个里面，只能显式的通过 props 往下面传）
       changeData: this.changeData,
-      formItemType: "",
+      formItemType: '',
       childChangeData: {}
-    };
+    }
   },
   watch: {
-    textModel(n) {
-      this.$set(this.changeData, "textModel", n);
+    textModel (n) {
+      this.$set(this.changeData, 'textModel', n)
     },
     formData: {
-      handler: function(val) {
-        this.$emit("input", val);
+      handler: function (val) {
+        this.$emit('input', val)
       },
       deep: true
     }
   },
   methods: {
-    initMode() {
-      //针对表单模式 进行初始设置
-      if (this.mode === "tableQuery") {
+    initMode () {
+      // 针对表单模式 进行初始设置
+      if (this.mode === 'tableQuery') {
         this.allRowsLenth = this.getFieldRow(
           this.currentFileds[0].children
-        ).length;
-        console.log(" this.allRowsLenth ", this.allRowsLenth);
-        this.tableQueryshowRows = Number(this.defaultShowRows);
+        ).length
+        console.log(' this.allRowsLenth ', this.allRowsLenth)
+        this.tableQueryshowRows = Number(this.defaultShowRows)
       }
     },
     //
-    toggleShow() {
+    toggleShow () {
       if (this.tableQueryshowRows < this.allRowsLenth) {
-        this.tableQueryshowRows = this.allRowsLenth;
+        this.tableQueryshowRows = this.allRowsLenth
       } else {
-        this.tableQueryshowRows = this.defaultShowRows;
+        this.tableQueryshowRows = this.defaultShowRows
       }
     },
     // 监听值更新
-    valueUpdateEvent(params) {
-      this.$emit("updateValue", params);
+    valueUpdateEvent (params) {
+      this.$emit('updateValue', params)
     },
 
     // 初始化 formData 的值
-    initFormData() {
-      this.$set(this, "formData", {});
+    initFormData () {
+      this.$set(this, 'formData', {})
       // console.log('initFormData');
       // 用 fileds 初始化 formData 的 key
       this.fields.forEach(fields => {
@@ -515,137 +515,137 @@ export default {
             // 处理初始值的问题
             // 1. 如果该值在 data 里，则直接取 data 里的值（面对场景：数值回显）
             if (field.key in this.data) {
-              this.$set(this.formData, field.key, this.data[field.key]);
+              this.$set(this.formData, field.key, this.data[field.key])
               // 赋值默认值的时候，触发事件通知上级
               this.valueUpdateEvent({
                 [field.key]: this.data[field.key]
-              });
+              })
             } else {
               // 2. 不需要回显的场景下
               // 2.1 如果该要素有默认值，则使用默认值
               if (field.defaultValue) {
-                this.$set(this.formData, field.key, field.defaultValue);
+                this.$set(this.formData, field.key, field.defaultValue)
                 // 赋值默认值的时候，触发事件通知上级
                 this.valueUpdateEvent({
                   [field.key]: field.defaultValue
-                });
+                })
               } else {
                 // 2.2 该要素没有默认值，使用通用默认值
                 if (
-                  field.type === "child-form" ||
-                  field.type === "checkbox" ||
-                  field.type === "mutiple-select" ||
-                  field.type === "table-readonly"
+                  field.type === 'child-form' ||
+                  field.type === 'checkbox' ||
+                  field.type === 'mutiple-select' ||
+                  field.type === 'table-readonly'
                 ) {
-                  this.$set(this.formData, field.key, []);
-                } else if (field.type === "area-select") {
-                  this.$set(this.formData, field.key, ["", "", ""]);
+                  this.$set(this.formData, field.key, [])
+                } else if (field.type === 'area-select') {
+                  this.$set(this.formData, field.key, ['', '', ''])
                 } else {
-                  this.$set(this.formData, field.key, "");
+                  this.$set(this.formData, field.key, '')
                 }
               }
             }
-          });
+          })
         }
-      });
+      })
     },
 
     // 获取初始情况下，所有默认禁用要素
-    getDefaultDisableList() {
-      const disableList = [];
+    getDefaultDisableList () {
+      const disableList = []
       // 遍历传入的数据
       this.fields.forEach(fields => {
         if (fields.children && fields.children instanceof Array) {
           fields.children.forEach(field => {
             // 如果是true，则添加到禁用列表里
             if (field.disableDefault) {
-              disableList.push(field.key);
+              disableList.push(field.key)
             }
-          });
+          })
         }
-      });
+      })
 
-      this.changeData.disableList = disableList;
+      this.changeData.disableList = disableList
     },
     // 获取初始情况下，所有自定义的组件要素
-    getCustomItemList() {
-      const customItemList = [];
+    getCustomItemList () {
+      const customItemList = []
       // 遍历传入的数据
       this.fields.forEach(fields => {
         if (fields.children && fields.children instanceof Array) {
           fields.children.forEach(field => {
             // 如果是true，则添加到禁用列表里
-            if (field.type === "component") {
-              customItemList.push(field.key);
+            if (field.type === 'component') {
+              customItemList.push(field.key)
             }
-          });
+          })
         }
-      });
+      })
 
-      this.customItemList = customItemList;
+      this.customItemList = customItemList
     },
 
     // 默认隐藏
-    getDefaultHiddenList() {
-      const hiddenList = [];
+    getDefaultHiddenList () {
+      const hiddenList = []
       // 遍历传入的数据
       this.fields.forEach(fields => {
         if (fields.children && fields.children instanceof Array) {
           fields.children.forEach(field => {
             // 如果是true，则添加到禁用列表里
             if (field.hiddenDefault) {
-              hiddenList.push(field.key);
+              hiddenList.push(field.key)
             }
-          });
+          })
         }
-      });
+      })
 
-      this.changeData.hiddenKeyList = hiddenList;
+      this.changeData.hiddenKeyList = hiddenList
     },
 
     // 对一个 block 下的要素，进行 el-row 的分行
-    getFieldRow(children) {
+    getFieldRow (children) {
       // 一个二维数组，每个数组要素是 el-row 的一行
-      const list = [];
+      const list = []
       if (!children) {
-        return list;
+        return list
       }
       children.forEach(item => {
         // 如果当前要素不显示，则直接跳过
         if (!this.isShow(item)) {
-          return;
+          return
         }
-        const currentSpan = this.getColSize(item);
+        const currentSpan = this.getColSize(item)
         // 如果初始为空
         if (list.length === 0) {
           const obj = {
             // 获取到他有多少 span，满 24 为一行
             span: currentSpan,
             rowItem: item
-          };
-          list.push([obj]);
-          return;
+          }
+          list.push([obj])
+          return
         }
         // 如果初始不为空，
         // 1、判断有没有打开 （当前这个的）【默认在新行第一列】开关
         // 又或者是当前是不是子表单（item.type === 'child-form'表示是子表单）
         if (
           item.nextRowFirst ||
-          item.type === "child-form" ||
-          item.type === "table-readonly"
+          item.type === 'child-form' ||
+          item.type === 'table-readonly'
         ) {
           // 如果是新行第一列，那么直接把这个添加到 list 里面
           const obj = {
             // 获取到他有多少 span，满 24 为一行
             span: currentSpan,
             rowItem: item
-          };
-          list.push([obj]);
-          return;
+          }
+          list.push([obj])
+          return
         }
         // 2、判断（上一个）【默认是本行最后一列】开关是否打开
         // 先拿到最后一行
-        const listLastItem = list[list.length - 1];
+        const listLastItem = list[list.length - 1]
         // 的最后一个是否打开了这个开关
         if (listLastItem[listLastItem.length - 1].rowItem.currentRowLast) {
           // 如果打开这个开关，那么当前这个直接放到下一行的第一个
@@ -653,9 +653,9 @@ export default {
             // 获取到他有多少 span，满 24 为一行
             span: currentSpan,
             rowItem: item
-          };
-          list.push([obj]);
-          return;
+          }
+          list.push([obj])
+          return
         }
 
         // 下拉正常计算 span 来决定是否换行
@@ -663,8 +663,8 @@ export default {
         const lastTotalSpan = list[list.length - 1]
           .map(item => item.span)
           .reduce((lastTotal, currentItem) => {
-            return lastTotal + currentItem;
-          });
+            return lastTotal + currentItem
+          })
 
         // 如果已经大于等于 24 了，说明满了一行，那么直接创建新行
         // 或者是当前这个加之前的大于 24，那么说明这个放在之前那行超过 24，所以也要放到新行去
@@ -673,42 +673,41 @@ export default {
             // 获取到他有多少 span，满 24 为一行
             span: currentSpan,
             rowItem: item
-          };
-          list.push([obj]);
-          return;
+          }
+          list.push([obj])
         } else {
           // 此时说明当前这个可以放到之前哪一行
           const obj = {
             // 获取到他有多少 span，满 24 为一行
             span: currentSpan,
             rowItem: item
-          };
-          list[list.length - 1].push(obj);
+          }
+          list[list.length - 1].push(obj)
         }
-      });
+      })
       // console.log("getFieldRow result ", list);
-      return list;
+      return list
     },
 
     // 设置某个要素禁用
     // key：操作的 key
     // beDisable：必填，默认是 true，表示禁用。而 false，表示取消禁用
-    setElementDisable(key, beDisable = true) {
+    setElementDisable (key, beDisable = true) {
       // 设置禁用
       if (beDisable) {
         // 已经禁用了，则跳过。否则则添加进去
         if (this.changeData.disableList.indexOf(key) === -1) {
-          this.changeData.disableList.push(key);
+          this.changeData.disableList.push(key)
         }
       } else {
         // 取消禁用
         // 未禁用则跳过。已经禁用，则继续
-        const index = this.changeData.disableList.indexOf(key);
+        const index = this.changeData.disableList.indexOf(key)
         if (index > -1) {
           this.changeData.disableList = [
             ...this.changeData.disableList.slice(0, index),
             ...this.changeData.disableList.slice(index + 1)
-          ];
+          ]
         }
       }
     },
@@ -716,22 +715,22 @@ export default {
     // 设置某个要素隐藏
     // key：操作的 key
     // beHidden：必填，默认是 true，表示隐藏。而 false，表示取消隐藏
-    setElementHidden(key, beHidden = true) {
+    setElementHidden (key, beHidden = true) {
       // 设置隐藏
       if (beHidden) {
         // 已经禁用了，则跳过。否则则添加进去
         if (this.changeData.hiddenKeyList.indexOf(key) === -1) {
-          this.changeData.hiddenKeyList.push(key);
+          this.changeData.hiddenKeyList.push(key)
         }
       } else {
         // 取消禁用
         // 未禁用则跳过。已经禁用，则继续
-        const index = this.changeData.hiddenKeyList.indexOf(key);
+        const index = this.changeData.hiddenKeyList.indexOf(key)
         if (index > -1) {
           this.changeData.hiddenKeyList = [
             ...this.changeData.hiddenKeyList.slice(0, index),
             ...this.changeData.hiddenKeyList.slice(index + 1)
-          ];
+          ]
         }
       }
     },
@@ -739,7 +738,7 @@ export default {
     // 设置某个要素必填
     // key：操作的 key
     // beHidden：必填，默认是 true，表示隐藏。而 false，表示取消隐藏
-    setElementRequired(key, beRequired = true) {
+    setElementRequired (key, beRequired = true) {
       // 设置必填
       if (beRequired) {
         // 先找到这个要素，如果其本身必填，则跳过。
@@ -749,43 +748,43 @@ export default {
             fields.children.forEach(field => {
               // 如果 key 不匹配，则跳过
               if (field.key !== key) {
-                return;
+                return
               }
               // 先判断有没有 rules 这个属性，没有则添加这个属性，并且添加必填项然后返回
               if (!field.rules) {
-                this.$set(field, "rules", [
+                this.$set(field, 'rules', [
                   {
                     required: true,
-                    message: "请输入",
-                    trigger: ["blur", "change"]
+                    message: '请输入',
+                    trigger: ['blur', 'change']
                   }
-                ]);
-                return;
+                ])
+                return
               }
 
               // 遍历 其 rules，
-              const { rules } = field;
+              const { rules } = field
               // 是否有 required 这条规则
-              let haveRequired = false;
+              let haveRequired = false
               // 是否已修改
-              let changed = false;
+              let changed = false
               rules.forEach(rule => {
                 // 如果有 required 属性
-                if ("required" in rule) {
-                  haveRequired = true;
+                if ('required' in rule) {
+                  haveRequired = true
                   // 如果值为 true，则跳过
                   if (rule.required) {
-                    return;
+
                   } else {
                     // 否则修改其为 true
-                    rule.required = true;
-                    changed = true;
+                    rule.required = true
+                    changed = true
                   }
                 }
-              });
+              })
               // 如果已修改，那么说明没必要继续操作了，跳过
               if (changed) {
-                return;
+                return
               }
               // 如果没修改，并且没有必填规则
               // （注意，如果有规则，那么必然已修改。所以只存在有规则已修改、未修改有规则、未修改无规则三种情况）
@@ -793,13 +792,13 @@ export default {
                 // 添加规则
                 rules.push({
                   required: true,
-                  message: "请输入",
-                  trigger: ["blur", "change"]
-                });
+                  message: '请输入',
+                  trigger: ['blur', 'change']
+                })
               }
-            });
+            })
           }
-        });
+        })
       } else {
         // 取消必填
         // 不含必填规则的话，则跳过。如果含必填规则，则添加
@@ -808,32 +807,32 @@ export default {
             fields.children.forEach(field => {
               // 如果 key 不匹配，则跳过
               if (field.key !== key) {
-                return;
+                return
               }
 
               // 先判断有没有 rules 这个属性，没有则添加这个属性，并且添加必填项然后返回
               if (!field.rules) {
-                return;
+                return
               }
               // 如果有，则遍历并删除
-              let i = -1;
+              let i = -1
               field.rules.forEach((rule, index) => {
-                if ("required" in rule) {
-                  i = index;
+                if ('required' in rule) {
+                  i = index
                 }
-              });
+              })
               if (i !== -1) {
-                field.rules.splice(i, 1);
+                field.rules.splice(i, 1)
               }
-            });
+            })
           }
-        });
+        })
       }
     },
 
     // 初始化要素的 隐藏/显示、禁用/非禁用 状态等
     // 在父组件 data 更新的时候，调用这个方法
-    initStatus() {
+    initStatus () {
       // 遍历传入的数据
       this.fields.forEach(fields => {
         if (fields.children && fields.children instanceof Array) {
@@ -844,8 +843,8 @@ export default {
               field.valueLink.length &&
               field.valueLink.length > 0
             ) {
-              const { key } = field;
-              const v = this.data[key];
+              const { key } = field
+              const v = this.data[key]
 
               // 遍历
               field.valueLink.forEach(linkItem => {
@@ -859,54 +858,54 @@ export default {
                 ) {
                   // 再遍历
                   linkItem.linkList.forEach(triggerItem => {
-                    console.log("link------", v, linkItem);
+                    console.log('link------', v, linkItem)
 
                     if (v !== linkItem.value) {
-                      return;
+                      return
                     }
-                    const linkKey = triggerItem.linkKey;
+                    const linkKey = triggerItem.linkKey
                     // 如果没有联动 key，则跳过（正常来说，不会没有）
                     if (!linkKey) {
-                      return;
+                      return
                     }
-                    console.log("triggerItem", triggerItem);
+                    console.log('triggerItem', triggerItem)
                     // 如果联动值，则更新值
                     if (triggerItem.enableLinkValue) {
-                      this.updateFormData({ [linkKey]: triggerItem.linkValue });
+                      this.updateFormData({ [linkKey]: triggerItem.linkValue })
                     }
                     // 如果联动禁用/取消禁用，则更新禁用
                     if (triggerItem.enableLinkDisable) {
-                      this.setElementDisable(linkKey, triggerItem.linkDisable);
+                      this.setElementDisable(linkKey, triggerItem.linkDisable)
                     }
                     // 如果联动隐藏/显示，则更新
                     if (triggerItem.enableLinkHidden) {
-                      this.setElementHidden(linkKey, triggerItem.linkHidden);
+                      this.setElementHidden(linkKey, triggerItem.linkHidden)
                     }
                     // 如果联动必填/非必填，则更新
                     if (triggerItem.enableLinkRequired) {
                       this.setElementRequired(
                         linkKey,
                         triggerItem.linkRequired
-                      );
+                      )
                     }
-                  });
+                  })
                 }
-              });
+              })
             }
-          });
+          })
         }
-      });
+      })
     },
 
     // 找到 type="dynamic-select" 获取所有 parentCode，然后读取数据字典接口拉取对应的数据
     // todo 这里的数据字典请求接口，应该最后合并到一起，由一个专门的数据字典请求管理器去请求，减低接口重复请求的情况
-    loadDynamicSelectOptions() {
-      const parentCodeList = [];
+    loadDynamicSelectOptions () {
+      const parentCodeList = []
       // 遍历传入的数据
       this.fields.forEach(fields => {
         if (fields.children && fields.children instanceof Array) {
           fields.children.forEach(field => {
-            if (field.type === "dynamic-select" && field.parentKey) {
+            if (field.type === 'dynamic-select' && field.parentKey) {
               // 再做一次去重判断。如果该字典已经在里面了，再跳过这一个
               if (parentCodeList.indexOf(field.parentKey) === -1) {
                 if (
@@ -915,17 +914,17 @@ export default {
                     this.dynamicDict[field.parentKey].length !== 0
                   )
                 ) {
-                  parentCodeList.push(field.parentKey);
+                  parentCodeList.push(field.parentKey)
                   // 初始化一个数组
-                  this.$set(this.dynamicDict, field.parentKey, []);
+                  this.$set(this.dynamicDict, field.parentKey, [])
                 }
               }
             }
             // 地区选择框，三级联动
-            if (field.type === "area-select") {
-              const firstParentKey = field.firstParentKey || "10020";
-              const secondParentKey = field.firstParentKey || "10021";
-              const thirdParentKey = field.firstParentKey || "10022";
+            if (field.type === 'area-select') {
+              const firstParentKey = field.firstParentKey || '10020'
+              const secondParentKey = field.firstParentKey || '10021'
+              const thirdParentKey = field.firstParentKey || '10022'
               if (parentCodeList.indexOf(firstParentKey) === -1) {
                 if (
                   !(
@@ -933,8 +932,8 @@ export default {
                     this.dynamicDict[firstParentKey].length !== 0
                   )
                 ) {
-                  parentCodeList.push(firstParentKey);
-                  this.$set(this.dynamicDict, firstParentKey, []);
+                  parentCodeList.push(firstParentKey)
+                  this.$set(this.dynamicDict, firstParentKey, [])
                 }
               }
               if (parentCodeList.indexOf(secondParentKey) === -1) {
@@ -944,8 +943,8 @@ export default {
                     this.dynamicDict[secondParentKey].length !== 0
                   )
                 ) {
-                  parentCodeList.push(secondParentKey);
-                  this.$set(this.dynamicDict, secondParentKey, []);
+                  parentCodeList.push(secondParentKey)
+                  this.$set(this.dynamicDict, secondParentKey, [])
                 }
               }
               if (parentCodeList.indexOf(thirdParentKey) === -1) {
@@ -955,33 +954,33 @@ export default {
                     this.dynamicDict[thirdParentKey].length !== 0
                   )
                 ) {
-                  parentCodeList.push(thirdParentKey);
-                  this.$set(this.dynamicDict, thirdParentKey, []);
+                  parentCodeList.push(thirdParentKey)
+                  this.$set(this.dynamicDict, thirdParentKey, [])
                 }
               }
             }
-          });
+          })
         }
-      });
+      })
       if (parentCodeList.length === 0) {
-        return;
+        return
       }
 
       // 通过父 key 拿到所有元素
-      let payload = null;
+      let payload = null
       // 这里判断是不是 axios 的默认返回数据（未经过请求拦截器处理的）
       if (this.dynamicSelectOption.queryKey) {
         payload = {
           [this.dynamicSelectOption.queryKey]: parentCodeList
-        };
+        }
       } else {
-        payload = parentCodeList;
+        payload = parentCodeList
       }
       // console.log('QuickForm 拉取动态字典');
-      console.log(payload);
+      console.log(payload)
       //   console.log(this.dynamicSelectOption);
 
-      console.log(payload[this.dynamicSelectOption.queryKey]);
+      console.log(payload[this.dynamicSelectOption.queryKey])
       //   const valueStr = payload[this.dynamicSelectOption.parentKey].join(",");
       axios
         // .get(this.dynamicSelectOption.dictUrl, payload)
@@ -989,16 +988,16 @@ export default {
           params: {
             [this.dynamicSelectOption.queryKey]: payload[
               this.dynamicSelectOption.queryKey
-            ].join(",")
+            ].join(',')
           }
         })
         .then(res => {
           // 兼容性处理
-          let data;
+          let data
           if (res.request && res.headers) {
-            data = res.data;
+            data = res.data
           } else {
-            data = res;
+            data = res
           }
           if (data.status === 200 || data.status === 0) {
             if (data.data.length > 0) {
@@ -1006,42 +1005,42 @@ export default {
               // 这里在赋值之前，需要先判断一下 parentCodeList 的每个值，其对应的 dynamicDict 里的哪一个数组，是否是空的
               // 如果不是空的，则将其置为空数组
               parentCodeList.forEach(pCode => {
-                console.log("pCode=", pCode);
+                console.log('pCode=', pCode)
                 if (this.dynamicDict[pCode].length > 0) {
-                  this.$set(this.dynamicDict, pCode, []);
+                  this.$set(this.dynamicDict, pCode, [])
                 }
-              });
+              })
 
               // 加载到结果
               data.data.forEach(item => {
                 // 用每个返回值的 pCode 作为 key，将该项添加到数组里。
                 // 注：之所以是数组，是因为之前已经初始化过了（parentKey 为 Code）
-                const pCode = item[this.dynamicSelectOption.parentKey];
-                this.dynamicDict[pCode].push(item);
-              });
+                const pCode = item[this.dynamicSelectOption.parentKey]
+                this.dynamicDict[pCode].push(item)
+              })
             }
           } else {
-            this.$message.error(data.msg);
+            this.$message.error(data.msg)
           }
         })
         .catch(() => {
-          this.$message.error("数据字典加载错误，请刷新页面重试");
-        });
+          this.$message.error('数据字典加载错误，请刷新页面重试')
+        })
     },
 
     // 清空校验信息,移除表单项的校验结果。
     // 传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果
-    clearValidate(args) {
-      this.$refs.form.clearValidate(args);
+    clearValidate (args) {
+      this.$refs.form.clearValidate(args)
     },
     // 对部分表单字段进行校验的方法
-    validateField(args) {
-      this.$refs.form.validateField(args);
+    validateField (args) {
+      this.$refs.form.validateField(args)
     },
 
     // 获取过滤后的数据
-    getData(includeHidden = false) {
-      const d = {};
+    getData (includeHidden = false) {
+      const d = {}
       Object.keys(this.formData)
         .filter(key => {
           // 走正常逻辑
@@ -1049,9 +1048,9 @@ export default {
             this.changeData.hiddenKeyList.indexOf(key) > -1 &&
             !includeHidden
           ) {
-            return false;
+            return false
           } else {
-            return true;
+            return true
           }
         })
         .forEach(key => {
@@ -1059,159 +1058,159 @@ export default {
           // 第一种是一级表单的元素，他在被隐藏时，key是可以直接从 hiddenKeyList 获取的
           // 第二种是子表单的元素。因为他的 key 是三段拼接起来的 key，所以要去子表单里拿到 randomId 再做一个映射
           // 某个属性是否是子表单的判断条件是：遍历 fields，判断他是否是 type === 'child-form'
-          let childFormKeysList = [];
+          let childFormKeysList = []
           this.fields
             .map(field => {
-              const list = [];
+              const list = []
               field.children.forEach(item => {
-                if (item.type === "child-form") {
-                  list.push(item.key);
+                if (item.type === 'child-form') {
+                  list.push(item.key)
                 }
-              });
-              return list;
+              })
+              return list
             })
             .filter(list => {
-              return list.length > 0;
+              return list.length > 0
             })
             .forEach(list => {
-              childFormKeysList = [...childFormKeysList, ...list];
-            });
+              childFormKeysList = [...childFormKeysList, ...list]
+            })
           if (childFormKeysList.indexOf(key) > -1) {
             // 说明是在子表单
             d[key] = this.$refs[key][0].childFormFileds.map(
               (childField, index) => {
-                const childD = {};
-                const { randomId } = childField;
+                const childD = {}
+                const { randomId } = childField
                 childField.forEach(childItem => {
-                  const childKey = childItem.key;
-                  const keyText = `${key}_${randomId}_${childKey}`;
+                  const childKey = childItem.key
+                  const keyText = `${key}_${randomId}_${childKey}`
                   if (this.changeData.hiddenKeyList.indexOf(keyText) > -1) {
-                    return;
+
                   } else {
-                    childD[childKey] = this.formData[key][index][childKey];
+                    childD[childKey] = this.formData[key][index][childKey]
                   }
-                });
-                return childD;
+                })
+                return childD
               }
-            );
+            )
           } else {
             // 走正常逻辑
             // 自定义组件获取值
             if (this.customItemList.includes(key)) {
               if (this.$refs[key] && this.$refs[key].setItemValue) {
-                d[key] = this.$refs[key].getItemValue();
-                this.$set(this.formData, key, d[key]);
+                d[key] = this.$refs[key].getItemValue()
+                this.$set(this.formData, key, d[key])
               }
             } else {
-              //其他默认获取值
-              d[key] = this.formData[key];
+              // 其他默认获取值
+              d[key] = this.formData[key]
             }
           }
-        });
+        })
 
-      return d;
+      return d
     },
 
     // 校验，并获取校验后数据
-    validate(fn, incluedHidden = false) {
+    validate (fn, incluedHidden = false) {
       // 先校验父级表单的值
       // 对数据进行过滤
-      const data = this.getData(incluedHidden);
+      const data = this.getData(incluedHidden)
       this.$refs.form.validate(valid => {
         // 判断是否需要校验子表单
-        const childFormKeyList = [];
+        const childFormKeyList = []
         this.fields.forEach(filed => {
           if (filed.children && filed.children.length > 0) {
             filed.children.forEach(formItem => {
               // 如果某一项是
-              if (formItem.type === "child-form") {
-                childFormKeyList.push(formItem.key);
+              if (formItem.type === 'child-form') {
+                childFormKeyList.push(formItem.key)
               }
-            });
+            })
           }
-        });
+        })
 
         if (childFormKeyList.length === 0) {
           if (valid) {
-            fn(true, data);
+            fn(true, data)
           } else {
-            fn(false, data);
+            fn(false, data)
           }
         } else {
           const validateList = childFormKeyList.map(key => {
-            return this.$refs[key][0].validateForm();
-          });
+            return this.$refs[key][0].validateForm()
+          })
           Promise.all(validateList)
             .then(() => {
               // 父表单校验也通过了，才算都通过
               if (valid) {
-                fn(true, data);
+                fn(true, data)
               } else {
                 // 否则即使子表单校验通过，父表单校验没通过，也是算不通过的
-                fn(false, data);
+                fn(false, data)
               }
             })
             .catch(() => {
-              fn(false, data);
-            });
+              fn(false, data)
+            })
         }
-      });
+      })
     },
 
     // 重置表单数据
-    resetFields() {
-      this.$refs.form.resetFields();
+    resetFields () {
+      this.$refs.form.resetFields()
       this.fields.forEach(filed => {
         if (filed.children && filed.children.length > 0) {
           filed.children.forEach(formItem => {
             // 如果某一项是
-            if (formItem.type === "child-form") {
-              const a = this.$refs[formItem.key];
+            if (formItem.type === 'child-form') {
+              const a = this.$refs[formItem.key]
               if (a instanceof Array) {
-                a[0].resetFields();
+                a[0].resetFields()
               } else {
-                a.resetFields();
+                a.resetFields()
               }
             }
-          });
+          })
         }
-      });
+      })
     },
     // 更新指定item 的options
-    getOptionsData(key, query) {
-      const $item = this.$refs[key];
+    getOptionsData (key, query) {
+      const $item = this.$refs[key]
       if ($item && $item.getOptionsData) {
-        $item.getOptionsData(query);
+        $item.getOptionsData(query)
       }
     },
     // getItems(key) {},
     // 表单组件是否显示
-    isShow(item) {
+    isShow (item) {
       // 如果该要素在隐藏列表里，则不显示
       if (this.changeData.hiddenKeyList.indexOf(item.key) > -1) {
-        return false;
+        return false
       }
-      return true;
+      return true
     },
     // 重置表单 请用 resetFields 代替
-    resetFormData(formdata) {
+    resetFormData (formdata) {
       // 清除数据的fromdata 为响应式数据
-      const data = JSON.parse(JSON.stringify(formdata));
+      const data = JSON.parse(JSON.stringify(formdata))
       // console.log("resetFormData", formdata);
-      const dataKeys = Object.keys(data);
-      const formDataKeys = Object.keys(this.formData);
-      const dataKeysLength = dataKeys.length;
+      const dataKeys = Object.keys(data)
+      const formDataKeys = Object.keys(this.formData)
+      const dataKeysLength = dataKeys.length
       if (dataKeysLength !== formDataKeys.length) {
-        console.log("数据字段和原有长度的不一致，无法设置");
-        return false;
+        console.log('数据字段和原有长度的不一致，无法设置')
+        return false
       }
       for (let i = 0; i < dataKeysLength; i++) {
         if (!formDataKeys.includes(dataKeys[i])) {
-          console.log("数据字段和原有的不一致，无法设置");
-          return false;
+          console.log('数据字段和原有的不一致，无法设置')
+          return false
         }
       }
-      this.formData = data;
+      this.formData = data
     },
 
     //   Object.keys(data).forEach(key => {
@@ -1224,75 +1223,75 @@ export default {
     // },
 
     // 更新数据
-    updateFormData(data) {
+    updateFormData (data) {
       Object.keys(data).forEach(key => {
         // 自定义组件设置更新值
         if (this.customItemList.includes(key)) {
           if (this.$refs[key] && this.$refs[key].setItemValue) {
-            this.$refs[key].setItemValue(data[key]);
+            this.$refs[key].setItemValue(data[key])
           }
         }
         // 如果 key 在值里面
         else if (key in this.formData) {
           // 则回填这个值
-          this.$set(this.formData, key, data[key]);
+          this.$set(this.formData, key, data[key])
         }
-      });
+      })
     },
 
     // 收起/展开区块
-    foldBlock(block) {
-      const label = block.label;
-      const index = this.foldBlockList.indexOf(label);
+    foldBlock (block) {
+      const label = block.label
+      const index = this.foldBlockList.indexOf(label)
       if (index === -1) {
-        this.foldBlockList.push(block.label);
+        this.foldBlockList.push(block.label)
       } else {
-        this.foldBlockList.splice(index, 1);
+        this.foldBlockList.splice(index, 1)
       }
     },
 
     // 收起展开所有区块
-    foldAllBlock() {
-      const labelList = [];
+    foldAllBlock () {
+      const labelList = []
       this.fields.forEach(block => {
         // 如果没有 label，则不支持收起
         if (block.label) {
-          labelList.push(block.label);
+          labelList.push(block.label)
         }
-      });
+      })
       // 如果长度相等，说明已经全部收起了，那么就是展开
       if (this.foldBlockList.length === labelList.length) {
-        this.foldBlockList = [];
+        this.foldBlockList = []
       } else {
-        this.foldBlockList = labelList;
+        this.foldBlockList = labelList
       }
     },
 
     // 浏览模式切换
-    changeScanType() {
-      if (this.scanType === "normal") {
-        this.scanType = "single";
+    changeScanType () {
+      if (this.scanType === 'normal') {
+        this.scanType = 'single'
         // 如果切换为单体，那么将所有隐藏的显示出来
-        this.foldBlockList = [];
-        this.singleScanBlock = this.fields[0].label;
+        this.foldBlockList = []
+        this.singleScanBlock = this.fields[0].label
       } else {
-        this.scanType = "normal";
-        this.singleScanBlock = "";
+        this.scanType = 'normal'
+        this.singleScanBlock = ''
       }
     },
 
-    getProps(rowItem) {
+    getProps (rowItem) {
       if (!rowItem.size) {
-        rowItem.size = this.formItemSize;
+        rowItem.size = this.formItemSize
       }
       return {
         ref: rowItem.key,
         item: rowItem,
         allDisabled: this.allDisabled
-      };
+      }
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">

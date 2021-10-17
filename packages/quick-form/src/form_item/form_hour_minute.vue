@@ -24,13 +24,13 @@
 </template>
 
 <script>
-import FormMixin from "./mixin";
+import FormMixin from './mixin'
 
 export default {
-  name: "FormHourMinute",
+  name: 'FormHourMinute',
   mixins: [FormMixin],
   methods: {}
-};
+}
 </script>
 
 <style scoped lang="less">

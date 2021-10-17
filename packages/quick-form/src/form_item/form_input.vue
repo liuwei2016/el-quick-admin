@@ -31,40 +31,40 @@
 </template>
 
 <script>
-import FormMixin from "./mixin";
+import FormMixin from './mixin'
 
 export default {
-  name: "FormInput",
+  name: 'FormInput',
   mixins: [FormMixin],
   computed: {
     // 前置符号
-    prepend() {
+    prepend () {
       // 兼容性处理
       if (this.item.prepend) {
-        return this.item.prepend;
+        return this.item.prepend
       } else if (this.item.prependMsg) {
-        return this.item.prependMsg;
+        return this.item.prependMsg
       } else if (this.item.prefixMsg) {
-        return this.item.prefixMsg;
+        return this.item.prefixMsg
       } else {
-        return "";
+        return ''
       }
     },
     // 后置符号
-    append() {
+    append () {
       // 兼容性处理
       if (this.item.append) {
-        return this.item.append;
+        return this.item.append
       } else if (this.item.appendMsg) {
-        return this.item.appendMsg;
+        return this.item.appendMsg
       } else if (this.item.suffixMsg) {
-        return this.item.suffixMsg;
+        return this.item.suffixMsg
       } else {
-        return "";
+        return ''
       }
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">

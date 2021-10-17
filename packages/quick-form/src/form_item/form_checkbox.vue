@@ -27,60 +27,60 @@
 </template>
 
 <script>
-import FormMixin from "./mixin";
+import FormMixin from './mixin'
 
 export default {
-  name: "Formcheckbox",
+  name: 'Formcheckbox',
   mixins: [FormMixin],
-  data() {
+  data () {
     return {
-      prependMsg: "",
-      appendMsg: ""
-    };
+      prependMsg: '',
+      appendMsg: ''
+    }
   },
   computed: {
-    textModelValue() {
+    textModelValue () {
       const content =
         this.item.options &&
         this.item.options.find(item => {
-          return item.value === this.val;
-        });
-      return (content && content.label) || "";
+          return item.value === this.val
+        })
+      return (content && content.label) || ''
     },
 
     val: {
-      get() {
-        return this.value;
+      get () {
+        return this.value
       },
-      set(v) {
-        this.$emit("input", v);
-        this._valueLink(v);
+      set (v) {
+        this.$emit('input', v)
+        this._valueLink(v)
         // 只有非子表单的情况下，才会冒泡上去数据变更
-        if (this.formItemType !== "childForm") {
+        if (this.formItemType !== 'childForm') {
           this.statusChangeFn.valueUpdateEvent({
             [this.item.key]: v
-          });
+          })
         } else {
           // 如果是子表单的话，执行内置的变更
-          this.childChangeData.valueUpdateEvent();
+          this.childChangeData.valueUpdateEvent()
         }
       }
     }
   },
   watch: {
     item: {
-      handler(n) {
+      handler (n) {
         if (n.prefixMsg) {
-          this.prependMsg = n.prefixMsg;
+          this.prependMsg = n.prefixMsg
         }
         if (n.suffixMsg) {
-          this.appendMsg = n.suffixMsg;
+          this.appendMsg = n.suffixMsg
         }
       },
       immediate: true
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">

@@ -23,44 +23,44 @@
 </template>
 
 <script>
-import FormMixin from "./mixin";
+import FormMixin from './mixin'
 
 export default {
-  name: "FormDateTimeRange",
+  name: 'FormDateTimeRange',
   props: {
     value: {
       type: String,
-      default: ""
+      default: ''
     }
   },
   mixins: [FormMixin],
   computed: {
     val: {
-      get() {
+      get () {
         if (this.value) {
-          return JSON.parse(this.value);
+          return JSON.parse(this.value)
         } else {
-          return [];
+          return []
         }
       },
-      set(v) {
-        this.$emit("input", JSON.stringify(v));
+      set (v) {
+        this.$emit('input', JSON.stringify(v))
         // 只有非子表单的情况下，才会冒泡上去数据变更
-        if (this.formItemType !== "childForm") {
+        if (this.formItemType !== 'childForm') {
           this.statusChangeFn.valueUpdateEvent({
             [this.item.key]: v
-          });
+          })
         } else {
           // 如果是子表单的话，执行内置的变更
-          this.childChangeData.valueUpdateEvent();
+          this.childChangeData.valueUpdateEvent()
         }
       }
     },
-    textModelValue() {
-      return this.val && this.val.join("至");
+    textModelValue () {
+      return this.val && this.val.join('至')
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">
