@@ -1,6 +1,6 @@
 {
   "name": "el-quick-table",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "el-quick-table component",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -9,6 +9,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
   "keywords": []
 }
