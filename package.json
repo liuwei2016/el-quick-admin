@@ -3,7 +3,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "name": "03-lgelement",
+  "name": "quick-admin",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
