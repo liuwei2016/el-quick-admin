@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 Vue.config.productionTip = false;
 // import quickTable from "el-quick-table";
-import quickTable from "../../packages/quick-table/dist/es/index.js";
+import quickTable from "../../packages/quick-table/index.js";
 // import QuickForm from "../../lib/el-quick-form.umd.min.js";
 import quickForm from "el-quick-form";
 // import agelTable from "quick-table";

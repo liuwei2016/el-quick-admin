@@ -179,3 +179,8 @@ module.exports = fs.readdirSync(root)
 ```js
 "build": "rollup -c"
 ```
+
+
+###  处理 单独的 
+yarn workspace <workspace_name> <command>
+eg: yarn workspace el-quick-table run clean

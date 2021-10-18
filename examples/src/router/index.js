@@ -5,6 +5,11 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/login/index.vue")
+  },
+  {
     path: "/quickTable",
     name: "QuickTable",
     component: () => import("../views/quickTable/")
